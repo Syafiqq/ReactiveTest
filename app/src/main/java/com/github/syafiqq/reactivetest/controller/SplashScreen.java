@@ -1,12 +1,24 @@
 package com.github.syafiqq.reactivetest.controller;
 
 import android.annotation.SuppressLint;
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
+import android.os.SystemClock;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import com.github.syafiqq.reactivetest.R;
+import com.github.syafiqq.reactivetest.controller.page.Page0001;
+import io.reactivex.Single;
+import io.reactivex.SingleEmitter;
+import io.reactivex.SingleOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.annotations.NonNull;
+import io.reactivex.disposables.Disposable;
+import io.reactivex.functions.Consumer;
+import io.reactivex.schedulers.Schedulers;
+import timber.log.Timber;
 
 /**
  * An example full-screen activity that shows and hides the system UI (i.e.
@@ -20,14 +32,6 @@ public class SplashScreen extends AppCompatActivity
      */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler hideHandler = new Handler();
-    private final Runnable hideOperation = new Runnable()
-    {
-        @Override
-        public void run()
-        {
-            hide();
-        }
-    };
     private View mContentView;
     private final Runnable hideCompletelyOperation = new Runnable()
     {
@@ -37,10 +41,21 @@ public class SplashScreen extends AppCompatActivity
             SplashScreen.this.hideCompletely();
         }
     };
+    private final Runnable hideOperation = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            hide();
+        }
+    };
+    private Disposable disposable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
     {
+        Timber.d("onCreate");
+
         super.onCreate(savedInstanceState);
 
         super.setContentView(R.layout.activity_splash_screen);
@@ -51,6 +66,8 @@ public class SplashScreen extends AppCompatActivity
     @Override
     protected void onPostCreate(Bundle savedInstanceState)
     {
+        Timber.d("onPostCreate");
+
         super.onPostCreate(savedInstanceState);
 
         // Trigger the initial hide() shortly after the activity has been
@@ -59,8 +76,44 @@ public class SplashScreen extends AppCompatActivity
         this.delayedHide(50);
     }
 
+    @Override protected void onPostResume()
+    {
+        Timber.d("onPostResume");
+
+        super.onPostResume();
+
+        this.disposable = Single.create(new SingleOnSubscribe<String>()
+        {
+            @Override public void subscribe(@NonNull SingleEmitter<String> emitter) throws Exception
+            {
+                SystemClock.sleep(500);
+                emitter.onSuccess("");
+            }
+        })
+                                .subscribeOn(Schedulers.io())
+                                .observeOn(AndroidSchedulers.mainThread())
+                                .subscribe(new Consumer<String>()
+                                {
+                                    @Override public void accept(String s) throws Exception
+                                    {
+                                        final Intent intent = new Intent(SplashScreen.this, Page0001.class);
+                                        SplashScreen.super.startActivity(intent);
+                                    }
+                                });
+    }
+
+    @Override protected void onDestroy()
+    {
+        Timber.d("onDestroy");
+
+        super.onDestroy();
+        disposable.dispose();
+    }
+
     private void hide()
     {
+        Timber.d("hide");
+
         // Hide UI first
         final ActionBar actionBar = getSupportActionBar();
         if(actionBar != null)
@@ -75,6 +128,8 @@ public class SplashScreen extends AppCompatActivity
     @SuppressLint("InlinedApi")
     private void hideCompletely()
     {
+        Timber.d("hideCompletely");
+
         // Delayed removal of status and navigation bar
 
         // Note that some of these constants are new as of API 16 (Jelly Bean)
@@ -94,6 +149,8 @@ public class SplashScreen extends AppCompatActivity
      */
     private void delayedHide(int delayMillis)
     {
+        Timber.d("hideCompletely");
+
         this.hideHandler.removeCallbacks(this.hideOperation);
         this.hideHandler.postDelayed(this.hideOperation, delayMillis);
     }
