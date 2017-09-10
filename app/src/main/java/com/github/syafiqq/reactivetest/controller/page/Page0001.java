@@ -15,8 +15,7 @@ import android.view.MenuItem;
 import android.view.View;
 import com.github.syafiqq.reactivetest.R;
 
-public class Page0001 extends AppCompatActivity
-        implements NavigationView.OnNavigationItemSelectedListener
+public class Page0001 extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
 
     @Override
