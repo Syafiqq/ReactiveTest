@@ -32,6 +32,14 @@ public class SplashScreen extends AppCompatActivity
      */
     private static final int UI_ANIMATION_DELAY = 300;
     private final Handler hideHandler = new Handler();
+    private final Runnable hideOperation = new Runnable()
+    {
+        @Override
+        public void run()
+        {
+            hide();
+        }
+    };
     private View mContentView;
     private final Runnable hideCompletelyOperation = new Runnable()
     {
@@ -39,14 +47,6 @@ public class SplashScreen extends AppCompatActivity
         public void run()
         {
             SplashScreen.this.hideCompletely();
-        }
-    };
-    private final Runnable hideOperation = new Runnable()
-    {
-        @Override
-        public void run()
-        {
-            hide();
         }
     };
     private Disposable disposable;
@@ -122,7 +122,7 @@ public class SplashScreen extends AppCompatActivity
         }
 
         // Schedule a runnable to remove the status and navigation bar after a delay
-        this.hideHandler.postDelayed(this.hideCompletelyOperation, UI_ANIMATION_DELAY);
+        //this.hideHandler.postDelayed(this.hideCompletelyOperation, UI_ANIMATION_DELAY);
     }
 
     @SuppressLint("InlinedApi")
