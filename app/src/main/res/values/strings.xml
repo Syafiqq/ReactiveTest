@@ -3,4 +3,10 @@
 
     <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="splash_screen_title">Splash\nScreen</string>
+    <string name="title_activity_page0001">Page0001</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
 </resources>
