@@ -3,7 +3,7 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/drawer_menu_page_0001"
-                android:title="@string/title_activity_page0001" />
+                android:id="@+id/menu_drawer_main_item_operator"
+                android:title="@string/menu_drawer_main_item_operator" />
     </group>
 </menu>

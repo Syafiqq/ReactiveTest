@@ -1,5 +1,6 @@
 package com.github.syafiqq.reactivetest.controller;
 
+import android.content.Intent;
 import android.support.annotation.LayoutRes;
 import android.support.annotation.NonNull;
 import android.support.design.widget.NavigationView;
@@ -9,9 +10,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.MenuItem;
 import android.widget.FrameLayout;
 import com.github.syafiqq.reactivetest.R;
+import com.github.syafiqq.reactivetest.controller.page.operators.OperatorsDashboard;
 import timber.log.Timber;
 
-public class DrawerActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
+public class DrawerMainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     protected DrawerLayout drawer;
     protected NavigationView navigation;
@@ -22,7 +24,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         this.drawer = (DrawerLayout) super.getLayoutInflater().inflate(R.layout.drawer_main, null);
         this.navigation = drawer.findViewById(R.id.navigation_view);
-        final FrameLayout container = drawer.findViewById(R.id.drawer_container);
+        final FrameLayout container = drawer.findViewById(R.id.frame_layout);
 
         this.navigation.setNavigationItemSelectedListener(this);
 
@@ -51,9 +53,11 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         switch(id)
         {
-            case R.id.drawer_menu_page_0001:
+            case R.id.menu_drawer_main_item_operator:
             {
-                Timber.d("Operators");
+                final Intent intent = new Intent(this, OperatorsDashboard.class);
+                super.startActivity(intent);
+                super.finish();
             }
             break;
             default:
