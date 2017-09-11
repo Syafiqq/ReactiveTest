@@ -22,9 +22,9 @@
             </intent-filter>
         </activity>
         <activity
-                android:name=".controller.page.Page0001"
-                android:label="@string/title_activity_page0001"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:name=".controller.page.MainDashboard"
+                android:label="@string/title_activity_main_dashboard"
+                android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
