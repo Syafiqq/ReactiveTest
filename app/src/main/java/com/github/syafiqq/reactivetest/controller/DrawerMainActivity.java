@@ -53,7 +53,7 @@ public class DrawerMainActivity extends AppCompatActivity implements NavigationV
 
         switch(id)
         {
-            case R.id.menu_drawer_main_item_operator:
+            case R.id.menu_item_operator:
             {
                 final Intent intent = new Intent(this, OperatorsDashboard.class);
                 super.startActivity(intent);

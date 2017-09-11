@@ -53,14 +53,14 @@ public class DrawerOperatorsActivity extends AppCompatActivity implements Naviga
 
         switch(id)
         {
-            case R.id.menu_drawer_operators_item_back:
+            case R.id.menu_item_back:
             {
                 final Intent intent = new Intent(this, MainDashboard.class);
                 super.startActivity(intent);
                 super.finish();
             }
             break;
-            case R.id.menu_drawer_operators_item_create:
+            case R.id.menu_item_create:
             {
                 Timber.d("Operators Create");
             }

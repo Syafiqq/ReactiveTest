@@ -3,10 +3,10 @@
 
     <group android:checkableBehavior="single">
         <item
-                android:id="@+id/menu_drawer_operators_item_back"
+                android:id="@+id/menu_item_back"
                 android:title="@string/command_back" />
         <item
-                android:id="@+id/menu_drawer_operators_item_create"
+                android:id="@+id/menu_item_create"
                 android:title="@string/menu_drawer_operators_item_create" />
     </group>
 </menu>
