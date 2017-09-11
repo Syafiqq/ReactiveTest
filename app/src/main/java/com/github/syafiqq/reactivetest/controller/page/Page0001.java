@@ -83,7 +83,7 @@ public class Page0001 extends DrawerMainActivity implements NavigationView.OnNav
 
         switch(id)
         {
-            case R.id.menu_drawer_main_item_operator:
+            case R.id.menu_item_operator:
             {
             }
             break;
