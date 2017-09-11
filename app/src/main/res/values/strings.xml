@@ -17,4 +17,5 @@
     <string name="menu_drawer_op_create_item_defer">Defer</string>
     <string name="title_operators_activity_operators_dasboard">OperatorsDasboard</string>
     <string name="command_back">Back</string>
+    <string name="title_activity_op_create_create">OpCreateCreate</string>
 </resources>

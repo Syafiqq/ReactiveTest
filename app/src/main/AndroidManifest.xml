@@ -28,6 +28,10 @@
         <activity
                 android:name=".controller.page.operators.OperatorsDashboard"
                 android:label="@string/title_operators_activity_operators_dasboard"
+                android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+                android:name=".controller.page.operators.create.OpCreateCreate"
+                android:label="@string/title_activity_op_create_create"
                 android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
