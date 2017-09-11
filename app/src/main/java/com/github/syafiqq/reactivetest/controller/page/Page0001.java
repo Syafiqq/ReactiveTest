@@ -14,15 +14,15 @@ import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.github.javafaker.Faker;
 import com.github.syafiqq.reactivetest.R;
-import com.github.syafiqq.reactivetest.controller.DrawerActivity;
+import com.github.syafiqq.reactivetest.controller.DrawerMainActivity;
 import io.reactivex.Observable;
 import io.reactivex.functions.Consumer;
 import java.util.LinkedList;
 import java.util.List;
 
-public class Page0001 extends DrawerActivity implements NavigationView.OnNavigationItemSelectedListener
+public class Page0001 extends DrawerMainActivity implements NavigationView.OnNavigationItemSelectedListener
 {
-    @BindView(R.id.page0001_list_view_data_container) public ListView displayData;
+    @BindView(R.id.list_view_data_container) public ListView displayData;
     private List<String> dataContainer;
     private ArrayAdapter<String> listAdapter;
 
@@ -33,7 +33,7 @@ public class Page0001 extends DrawerActivity implements NavigationView.OnNavigat
         setContentView(R.layout.activity_page_0001);
         ButterKnife.bind(this, super.drawer);
 
-        Toolbar toolbar = (Toolbar) findViewById(R.id.page_0001_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, super.drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -83,7 +83,7 @@ public class Page0001 extends DrawerActivity implements NavigationView.OnNavigat
 
         switch(id)
         {
-            case R.id.drawer_menu_page_0001:
+            case R.id.menu_drawer_main_item_operator:
             {
             }
             break;
@@ -97,7 +97,7 @@ public class Page0001 extends DrawerActivity implements NavigationView.OnNavigat
         return true;
     }
 
-    @OnClick(R.id.page0001_button_generate_data)
+    @OnClick(R.id.button_generate_data)
     public void generate()
     {
         Faker faker = new Faker();
