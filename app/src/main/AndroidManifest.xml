@@ -32,7 +32,7 @@
         <activity
                 android:name=".controller.page.operators.create.OpCreateCreate"
                 android:label="@string/title_activity_op_create_create"
-                android:theme="@style/AppTheme.NoActionBar"></activity>
+                android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
