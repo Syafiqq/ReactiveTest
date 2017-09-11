@@ -9,7 +9,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import com.github.syafiqq.reactivetest.R;
-import com.github.syafiqq.reactivetest.controller.page.Page0001;
+import com.github.syafiqq.reactivetest.controller.page.MainDashboard;
 import io.reactivex.Single;
 import io.reactivex.SingleEmitter;
 import io.reactivex.SingleOnSubscribe;
@@ -96,7 +96,7 @@ public class SplashScreen extends AppCompatActivity
                                 {
                                     @Override public void accept(String s) throws Exception
                                     {
-                                        final Intent intent = new Intent(SplashScreen.this, Page0001.class);
+                                        final Intent intent = new Intent(SplashScreen.this, MainDashboard.class);
                                         SplashScreen.super.startActivity(intent);
                                     }
                                 });
