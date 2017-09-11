@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.widget.FrameLayout;
 import com.github.syafiqq.reactivetest.R;
 import com.github.syafiqq.reactivetest.controller.page.MainDashboard;
+import com.github.syafiqq.reactivetest.controller.page.operators.create.OpCreateCreate;
 import timber.log.Timber;
 
 public class DrawerOperatorsActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener
@@ -62,7 +63,9 @@ public class DrawerOperatorsActivity extends AppCompatActivity implements Naviga
             break;
             case R.id.menu_item_create:
             {
-                Timber.d("Operators Create");
+                final Intent intent = new Intent(this, OpCreateCreate.class);
+                super.startActivity(intent);
+                super.finish();
             }
             break;
             default:
