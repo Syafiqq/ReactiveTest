@@ -20,7 +20,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
     {
         Timber.d("setContentView");
 
-        this.drawer = (DrawerLayout) super.getLayoutInflater().inflate(R.layout.drawer_container, null);
+        this.drawer = (DrawerLayout) super.getLayoutInflater().inflate(R.layout.drawer_main, null);
         this.navigation = drawer.findViewById(R.id.navigation_view);
         final FrameLayout container = drawer.findViewById(R.id.drawer_container);
 
@@ -28,6 +28,20 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
 
         super.getLayoutInflater().inflate(layoutResID, container, true);
         super.setContentView(drawer);
+    }
+
+
+    @Override
+    public void onBackPressed()
+    {
+        if(this.drawer.isDrawerOpen(GravityCompat.START))
+        {
+            this.drawer.closeDrawer(GravityCompat.START);
+        }
+        else
+        {
+            super.onBackPressed();
+        }
     }
 
     @Override public boolean onNavigationItemSelected(@NonNull MenuItem item)
@@ -39,7 +53,7 @@ public class DrawerActivity extends AppCompatActivity implements NavigationView.
         {
             case R.id.drawer_menu_page_0001:
             {
-                Timber.d("Page 0001");
+                Timber.d("Operators");
             }
             break;
             default:
