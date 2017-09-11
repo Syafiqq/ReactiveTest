@@ -12,7 +12,7 @@
             android:text="Main Dashboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/content_main_text_view_title"
+            android:id="@+id/text_view_title"
             android:layout_marginRight="8dp"
             app:layout_constraintRight_toRightOf="parent"
             android:layout_marginLeft="8dp"

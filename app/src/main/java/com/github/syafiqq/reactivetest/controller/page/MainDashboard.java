@@ -5,10 +5,10 @@ import android.support.design.widget.NavigationView;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import com.github.syafiqq.reactivetest.R;
-import com.github.syafiqq.reactivetest.controller.DrawerActivity;
+import com.github.syafiqq.reactivetest.controller.DrawerMainActivity;
 import timber.log.Timber;
 
-public class MainDashboard extends DrawerActivity implements NavigationView.OnNavigationItemSelectedListener
+public class MainDashboard extends DrawerMainActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -17,7 +17,7 @@ public class MainDashboard extends DrawerActivity implements NavigationView.OnNa
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main_dashboard);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.activity_main_toolbar);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         setSupportActionBar(toolbar);
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this, super.drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
