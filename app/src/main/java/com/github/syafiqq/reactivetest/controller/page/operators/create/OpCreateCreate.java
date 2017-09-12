@@ -13,7 +13,6 @@ import android.widget.ListView;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
-import com.github.javafaker.Faker;
 import com.github.syafiqq.reactivetest.R;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
@@ -25,17 +24,27 @@ import io.reactivex.schedulers.Schedulers;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Random;
 import java.util.concurrent.TimeUnit;
 import java.util.concurrent.atomic.AtomicReference;
+import org.joda.time.LocalTime;
+import org.joda.time.format.DateTimeFormat;
+import org.joda.time.format.DateTimeFormatter;
 import timber.log.Timber;
 
+/**
+ * @author syafiq
+ * @link https://blog.thoughtram.io/angular/2016/06/16/cold-vs-hot-observables.html
+ * @link https://medium.com/@p.tournaris/rxjava-one-observable-multiple-subscribers-7bf497646675
+ */
 public class OpCreateCreate extends DrawerOpCreateActivity implements NavigationView.OnNavigationItemSelectedListener
 {
+    final @NonNull DateTimeFormatter format = DateTimeFormat.forPattern("HH:mm:ss.SSS");
 
     @BindView(R.id.list_view_container) public ListView displayData;
     private List<AtomicReference<String>> dataContainer;
     private ArrayAdapter<AtomicReference<String>> listAdapter;
-    private Observable<String> observable;
+    private Observable<LocalTime> observable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -59,17 +68,17 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
         this.listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.dataContainer);
         this.displayData.setAdapter(this.listAdapter);
 
-        this.observable = Observable.create(new ObservableOnSubscribe<String>()
+        this.observable = Observable.create(new ObservableOnSubscribe<LocalTime>()
         {
-            @Override public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<String> observer) throws Exception
+            @Override public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<LocalTime> observer) throws Exception
             {
-                final Faker faker = new Faker();
+                Random random = new Random();
                 try
                 {
-                    for(int i = 1; i < 10; i++)
+                    for(int i = 1; i < 5; i++)
                     {
-                        SystemClock.sleep(2000L);
-                        observer.onNext(faker.name().fullName());
+                        SystemClock.sleep(1500L + (random.nextInt(1000)));
+                        observer.onNext(LocalTime.now());
                     }
                     SystemClock.sleep(2000L);
                     observer.onComplete();
@@ -127,21 +136,20 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
         return true;
     }
 
-    public void subscribe(final AtomicReference<String> ref, final Observable<String> observable, final ArrayAdapter adapter, final List list)
+    public void subscribe(final AtomicReference<String> ref, final Observable<LocalTime> observable, final ArrayAdapter<AtomicReference<String>> adapter, final List<AtomicReference<String>> list)
     {
         Timber.d("subscribe");
 
         list.add(ref);
         adapter.notifyDataSetChanged();
 
-        observable.subscribe(new Consumer<String>()
+        observable.subscribe(new Consumer<LocalTime>()
         {
-            @Override public void accept(String name) throws Exception
+            @Override public void accept(LocalTime number) throws Exception
             {
-                String data = String.format(Locale.getDefault(), "Next : %s", name);
-                Timber.d(data);
+                Timber.d(String.format(Locale.getDefault(), "Next : %s", format.print(number)));
 
-                ref.set(data);
+                ref.set(format.print(number));
                 adapter.notifyDataSetChanged();
             }
         }, new Consumer<Throwable>()
@@ -150,7 +158,7 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
             {
                 Timber.e(throwable);
 
-                ref.set(throwable.getMessage());
+                ref.set(throwable.toString());
                 adapter.notifyDataSetChanged();
             }
         }, new Action()
@@ -160,7 +168,7 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
                 String data = "Sequence complete.";
                 Timber.d(data);
 
-                ref.set(data);
+                ref.set(ref.get() + " - Finish ");
                 adapter.notifyDataSetChanged();
             }
         });
@@ -171,7 +179,7 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
     {
         Timber.d("generate");
 
-        Observable.intervalRange(1L, 5L, 1000L, 500L, TimeUnit.MILLISECONDS)
+        Observable.intervalRange(1L, 5L, 4000L, 4000L, TimeUnit.MILLISECONDS)
                   .subscribeOn(Schedulers.newThread())
                   .observeOn(AndroidSchedulers.mainThread())
                   .subscribe(new Consumer<Long>()
