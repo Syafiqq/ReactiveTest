@@ -147,7 +147,7 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
         {
             @Override public void accept(LocalTime number) throws Exception
             {
-                Timber.d(String.format(Locale.getDefault(), "Next : %s", format.print(number)));
+                Timber.d(String.format(Locale.getDefault(), "Next [%s] : [%s] %s", System.identityHashCode(ref), System.identityHashCode(number), format.print(number)));
 
                 ref.set(format.print(number));
                 adapter.notifyDataSetChanged();
