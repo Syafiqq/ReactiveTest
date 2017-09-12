@@ -3,6 +3,7 @@ package com.github.syafiqq.reactivetest.controller;
 import android.app.Application;
 import android.content.Context;
 import com.github.syafiqq.reactivetest.BuildConfig;
+import net.danlew.android.joda.JodaTimeAndroid;
 import timber.log.Timber;
 
 public class App extends Application
@@ -11,6 +12,7 @@ public class App extends Application
     {
         super.onCreate();
         this.initializeTimber();
+        this.initializeJoda();
     }
 
     @Override
@@ -19,6 +21,11 @@ public class App extends Application
         super.attachBaseContext(context);
 
         // The following line triggers the initialization of ACRA
+    }
+
+    private void initializeJoda()
+    {
+        JodaTimeAndroid.init(this);
     }
 
     private void initializeTimber()
