@@ -10,22 +10,27 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Switch;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
 import com.github.syafiqq.reactivetest.R;
+import com.github.syafiqq.reactivetest.controller.custom.java.util.IntegerObservable;
 import io.reactivex.Observable;
 import io.reactivex.ObservableEmitter;
 import io.reactivex.ObservableOnSubscribe;
 import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
 import io.reactivex.schedulers.Schedulers;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Observer;
 import java.util.Random;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.atomic.AtomicReference;
 import org.joda.time.LocalTime;
 import org.joda.time.format.DateTimeFormat;
@@ -42,9 +47,14 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
     final @NonNull DateTimeFormatter format = DateTimeFormat.forPattern("HH:mm:ss.SSS");
 
     @BindView(R.id.list_view_container) public ListView displayData;
+    @BindView(R.id.switch_observable) public Switch switchObservable;
+
     private List<AtomicReference<String>> dataContainer;
     private ArrayAdapter<AtomicReference<String>> listAdapter;
+    private List<Disposable> disposableContainer;
     private Observable<LocalTime> observable;
+    private AtomicBoolean subscriberGuard;
+    private IntegerObservable _switchObservable;
 
     @Override
     protected void onCreate(Bundle savedInstanceState)
@@ -63,7 +73,20 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
 
         super.navigation.setNavigationItemSelectedListener(this);
 
+        this.subscriberGuard = new AtomicBoolean(false);
         this.dataContainer = new LinkedList<>();
+        this._switchObservable = new IntegerObservable(0);
+        this.disposableContainer = new LinkedList<>();
+
+        this._switchObservable.addObserver(new Observer()
+        {
+            @Override public void update(java.util.Observable observable, Object o)
+            {
+                int value = (Integer) o;
+                Timber.d("Shift : %d", value);
+                OpCreateCreate.this.switchObservable.setEnabled(!(value > 0));
+            }
+        });
 
         this.listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.dataContainer);
         this.displayData.setAdapter(this.listAdapter);
@@ -75,12 +98,12 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
                 Random random = new Random();
                 try
                 {
-                    for(int i = 1; i < 5; i++)
+                    while(subscriberGuard.get())
                     {
-                        SystemClock.sleep(1500L + (random.nextInt(1000)));
+                        SystemClock.sleep(1000L + (random.nextInt(500)));
                         observer.onNext(LocalTime.now());
                     }
-                    SystemClock.sleep(2000L);
+                    SystemClock.sleep(1000L);
                     observer.onComplete();
                 }
                 catch(Exception e)
@@ -143,7 +166,7 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
         list.add(ref);
         adapter.notifyDataSetChanged();
 
-        observable.subscribe(new Consumer<LocalTime>()
+        disposableContainer.add(observable.subscribe(new Consumer<LocalTime>()
         {
             @Override public void accept(LocalTime number) throws Exception
             {
@@ -169,15 +192,60 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
                 Timber.d(data);
 
                 ref.set(ref.get() + " - Finish ");
+                OpCreateCreate.this._switchObservable.decrement(1);
                 adapter.notifyDataSetChanged();
             }
-        });
+        }));
     }
 
     @OnClick(R.id.button_generate)
     public void generate()
     {
         Timber.d("generate");
+
+        this.subscriberGuard.set(true);
+        this._switchObservable.increment(1);
+        this.doSubscribe();
+    }
+
+    @OnClick(R.id.button_terminate)
+    public void terminate()
+    {
+        Timber.d("terminate");
+
+        this.subscriberGuard.set(false);
+    }
+
+    @OnClick(R.id.button_clear)
+    public void clear()
+    {
+        Timber.d("clear");
+
+        this.dataContainer.clear();
+        for(Disposable dispose : this.disposableContainer)
+        {
+            if(!dispose.isDisposed())
+            {
+                dispose.dispose();
+            }
+        }
+        this.disposableContainer.clear();
+        this._switchObservable.setValue(0);
+        this.listAdapter.notifyDataSetChanged();
+    }
+
+    private void doSubscribe()
+    {
+        Timber.d("doSubscribe");
+
+        this.subscribe(new AtomicReference<>("Initial"), this.observable, this.listAdapter, this.dataContainer);
+    }
+
+
+    @Deprecated
+    private void _testRange()
+    {
+        Timber.d("_testRange");
 
         Observable.intervalRange(1L, 5L, 4000L, 4000L, TimeUnit.MILLISECONDS)
                   .subscribeOn(Schedulers.newThread())
@@ -190,12 +258,4 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
                       }
                   });
     }
-
-    private void doSubscribe()
-    {
-        Timber.d("doSubscribe");
-
-        this.subscribe(new AtomicReference<>("Initial"), this.observable, this.listAdapter, this.dataContainer);
-    }
-
 }
