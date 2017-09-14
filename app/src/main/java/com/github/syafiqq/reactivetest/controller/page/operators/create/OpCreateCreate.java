@@ -9,6 +9,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
+import android.widget.CompoundButton;
 import android.widget.ListView;
 import android.widget.Switch;
 import butterknife.BindView;
@@ -23,6 +24,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
 import io.reactivex.functions.Action;
 import io.reactivex.functions.Consumer;
+import io.reactivex.observables.ConnectableObservable;
 import io.reactivex.schedulers.Schedulers;
 import java.util.LinkedList;
 import java.util.List;
@@ -73,7 +75,7 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
 
         super.navigation.setNavigationItemSelectedListener(this);
 
-        this.subscriberGuard = new AtomicBoolean(false);
+        this.subscriberGuard = new AtomicBoolean(true);
         this.dataContainer = new LinkedList<>();
         this._switchObservable = new IntegerObservable(0);
         this.disposableContainer = new LinkedList<>();
@@ -87,11 +89,35 @@ public class OpCreateCreate extends DrawerOpCreateActivity implements Navigation
                 OpCreateCreate.this.switchObservable.setEnabled(!(value > 0));
             }
         });
+        this.switchObservable.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener()
+        {
+            @Override public void onCheckedChanged(CompoundButton compoundButton, boolean b)
+            {
+                Timber.d(String.valueOf(b));
+
+                if(b)
+                {
+                    OpCreateCreate.this.subscriberGuard.set(true);
+                    OpCreateCreate.this.observable = OpCreateCreate.this.generateObservable();
+                    OpCreateCreate.this.observable = OpCreateCreate.this.observable.publish();
+                    ((ConnectableObservable) observable).connect();
+                }
+                else
+                {
+                    OpCreateCreate.this.subscriberGuard.set(true);
+                    OpCreateCreate.this.observable = OpCreateCreate.this.generateObservable();
+                }
+            }
+        });
 
         this.listAdapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, this.dataContainer);
         this.displayData.setAdapter(this.listAdapter);
+        this.observable = this.generateObservable();
+    }
 
-        this.observable = Observable.create(new ObservableOnSubscribe<LocalTime>()
+    public Observable<LocalTime> generateObservable()
+    {
+        return Observable.create(new ObservableOnSubscribe<LocalTime>()
         {
             @Override public void subscribe(@io.reactivex.annotations.NonNull ObservableEmitter<LocalTime> observer) throws Exception
             {
