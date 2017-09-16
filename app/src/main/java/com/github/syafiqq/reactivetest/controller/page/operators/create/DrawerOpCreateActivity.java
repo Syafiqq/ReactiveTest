@@ -77,7 +77,9 @@ public class DrawerOpCreateActivity extends AppCompatActivity implements Navigat
             break;
             case R.id.menu_item_defer:
             {
-                Timber.d("Operators Create");
+                final Intent intent = new Intent(this, OpCreateDefer.class);
+                super.startActivity(intent);
+                super.finish();
             }
             break;
             default:
