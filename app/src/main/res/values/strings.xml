@@ -18,4 +18,5 @@
     <string name="title_operators_activity_operators_dasboard">OperatorsDasboard</string>
     <string name="command_back">Back</string>
     <string name="title_activity_op_create_create">OpCreateCreate</string>
+    <string name="title_activity_op_create_defer">OpCreateDefer</string>
 </resources>
