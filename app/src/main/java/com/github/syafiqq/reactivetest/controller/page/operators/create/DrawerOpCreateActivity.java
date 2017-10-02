@@ -82,6 +82,13 @@ public class DrawerOpCreateActivity extends AppCompatActivity implements Navigat
                 super.finish();
             }
             break;
+            case R.id.menu_item_empty_never_error:
+            {
+                final Intent intent = new Intent(this, OpCreateEmptyNeverError.class);
+                super.startActivity(intent);
+                super.finish();
+            }
+            break;
             default:
             {
                 Timber.d("Can't Understand");
