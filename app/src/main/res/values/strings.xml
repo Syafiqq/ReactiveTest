@@ -1,22 +1,25 @@
 <resources>
     <string name="s_app_name">ReactiveTest</string>
-
-    <string name="title_activity_splash_screen">SplashScreen</string>
     <string name="splash_screen_title">Splash\nScreen</string>
-    <string name="title_activity_page0001">Page0001</string>
 
     <string name="navigation_drawer_open">Open navigation drawer</string>
     <string name="navigation_drawer_close">Close navigation drawer</string>
 
     <string name="action_settings">Settings</string>
     <string name="word_generate">Generate</string>
-    <string name="title_activity_main_dashboard">MainDashboard</string>
+
     <string name="menu_drawer_main_item_operator">Operators</string>
     <string name="menu_drawer_operators_item_create">Creating Observable</string>
     <string name="menu_drawer_op_create_item_create">Create</string>
     <string name="menu_drawer_op_create_item_defer">Defer</string>
-    <string name="title_operators_activity_operators_dasboard">OperatorsDasboard</string>
+    <string name="menu_drawer_op_create_item_empty_never_error">EmNevEr</string>
+
     <string name="command_back">Back</string>
+
+    <string name="title_activity_splash_screen">SplashScreen</string>
+    <string name="title_activity_page0001">Page0001</string>
+    <string name="title_activity_main_dashboard">MainDashboard</string>
+    <string name="title_operators_activity_operators_dasboard">OperatorsDasboard</string>
     <string name="title_activity_op_create_create">OpCreateCreate</string>
     <string name="title_activity_op_create_defer">OpCreateDefer</string>
     <string name="title_activity_op_create_empty_never_error">OpCreateEmptyNeverError</string>
