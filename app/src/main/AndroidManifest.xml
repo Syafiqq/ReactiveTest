@@ -14,7 +14,13 @@
                 android:name=".controller.SplashScreen"
                 android:configChanges="orientation|keyboardHidden|screenSize"
                 android:label="@string/title_activity_splash_screen"
-                android:theme="@style/FullscreenTheme"></activity>
+                android:theme="@style/FullscreenTheme">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
         <activity
                 android:name=".controller.page.MainDashboard"
                 android:label="@string/title_activity_main_dashboard"
@@ -30,13 +36,7 @@
         <activity
                 android:name=".controller.page.operators.create.OpCreateDefer"
                 android:label="@string/title_activity_op_create_defer"
-                android:theme="@style/AppTheme.NoActionBar">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
+                android:theme="@style/AppTheme.NoActionBar" />
     </application>
 
 </manifest>
