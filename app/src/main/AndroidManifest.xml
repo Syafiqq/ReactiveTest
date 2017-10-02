@@ -37,6 +37,10 @@
                 android:name=".controller.page.operators.create.OpCreateDefer"
                 android:label="@string/title_activity_op_create_defer"
                 android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+                android:name=".controller.page.operators.create.OpCreateEmptyNeverError"
+                android:label="@string/title_activity_op_create_empty_never_error"
+                android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
