@@ -119,6 +119,13 @@ class DisContainer
     }
 }
 
+/**
+ * @author syafiq
+ * @link http://reactivex.io/documentation/operators/empty-never-throw.html
+ * @link https://github.com/Froussios/Intro-To-RxJava/blob/master/Part%202%20-%20Sequence%20Basics/1.%20Creating%20a%20sequence.md
+ * @link https://github.com/Froussios/Intro-To-RxJava/blob/master/tests/java/itrx/chapter2/creating/ObservableFactoriesExample.java
+ */
+
 public class OpCreateEmptyNeverError extends DrawerOpCreateActivity implements NavigationView.OnNavigationItemSelectedListener
 {
     @BindView(R.id.view_empty) public View imageEmpty;
