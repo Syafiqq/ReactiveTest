@@ -40,6 +40,10 @@
         <activity
                 android:name=".controller.page.operators.create.OpCreateEmptyNeverError"
                 android:label="@string/title_activity_op_create_empty_never_error"
+                android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+                android:name=".controller.page.operators.create.OpCreateFrom"
+                android:label="@string/title_activity_op_create_from"
                 android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
