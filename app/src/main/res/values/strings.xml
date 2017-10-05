@@ -24,4 +24,5 @@
     <string name="title_activity_op_create_defer">OpCreateDefer</string>
     <string name="title_activity_op_create_empty_never_error">OpCreateEmptyNeverError</string>
     <string name="title_activity_op_create_from">OpCreateFrom</string>
+    <string name="menu_drawer_op_create_item_from">From</string>
 </resources>

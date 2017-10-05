@@ -14,5 +14,9 @@
         <item
                 android:id="@+id/menu_item_empty_never_error"
                 android:title="@string/menu_drawer_op_create_item_empty_never_error" />
+
+        <item
+                android:id="@+id/menu_item_from"
+                android:title="@string/menu_drawer_op_create_item_from" />
     </group>
 </menu>
